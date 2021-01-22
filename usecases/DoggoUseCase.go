@@ -1,13 +1,19 @@
 package usecases
 
 import (
-	"github.com/Fcmam5/go-clean-doggo/repositories"
+	"DoggosPkg/repositories"
 )
 
-type DoggoUseCase struct {
-	doggoRepo repositories.DoggoService
+type doggoUseCase struct {
+	doggoRepo repositories.DoggoRepository
 }
 
-func (d DoggoUseCase) GetDoggos(page int, limit int) ([]*repositories.DoggoDto, error) {
+func NewDoggoUseCase(repo repositories.DoggoRepository) domain.ArticleUsecase {
+	return &doggoUseCase{
+		doggoRepo: repo,
+	}
+}
+
+func (d *doggoUseCase) GetDoggos(page int, limit int) ([]repositories.DoggoDto, error) {
 	return d.doggoRepo.GetDoggos(page, limit)
 }
