@@ -16,4 +16,6 @@ func main() {
 
 	e := echo.New()
 	router.NewDoggosHandler(e, usecase)
+
+	e.Logger.Fatal(e.Start(":9090"))
 }
