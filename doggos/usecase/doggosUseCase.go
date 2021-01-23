@@ -7,7 +7,7 @@ import (
 )
 
 type DoggoUseCase interface {
-	GetDoggos(page int, limit int) ([]model.Doggo, error)
+	GetDoggos(page int, limit int, breedID string) ([]model.Doggo, error)
 }
 
 type doggoUseCase struct {
@@ -22,8 +22,8 @@ func NewDoggoUseCase(doggoRepo repositories.DoggoRepository, doggosMapper adapte
 	}
 }
 
-func (d *doggoUseCase) GetDoggos(page int, limit int) ([]model.Doggo, error) {
-	doggos, err := d.repository.GetDoggos(page, limit)
+func (d *doggoUseCase) GetDoggos(page int, limit int, breedID string) ([]model.Doggo, error) {
+	doggos, err := d.repository.GetDoggos(page, limit, breedID)
 	if err != nil {
 		return nil, err
 	}

@@ -17,7 +17,7 @@ func NewDoggoMapper() *doggosMapper {
 }
 
 func mapBreedsDto(breedsDto []repositories.BreedDto) []model.Breed {
-	var retVal = make([]model.Breed, cap(breedsDto), len(breedsDto))
+	var retVal = make([]model.Breed, 0)
 	for _, breedDto := range breedsDto {
 		breed := model.Breed{
 			Id:          breedDto.Id,
@@ -41,7 +41,7 @@ func mapDoggoDto(doggoDto repositories.DoggoDto) model.Doggo {
 }
 
 func (mapper *doggosMapper) Map(doggos []repositories.DoggoDto) []model.Doggo {
-	var retVal = make([]model.Doggo, cap(doggos), len(doggos))
+	var retVal = make([]model.Doggo, 0)
 	for _, doggoDto := range doggos {
 		retVal = append(retVal, mapDoggoDto(doggoDto))
 	}

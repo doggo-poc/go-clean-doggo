@@ -25,17 +25,28 @@ func NewDoggosHandler(e *echo.Echo, dR usecase.DoggoUseCase) {
 }
 
 func (h *DoggosHandler) FetchDoggos(c echo.Context) error {
-	limitS := c.QueryParam("limit")
-	limit, _ := strconv.Atoi(limitS)
+	queryLimit := c.QueryParam("limit")
+	var limit int
+	if queryLimit == "" {
+		limit = 25
+	} else {
+		limit, _ = strconv.Atoi(queryLimit)
+	}
 
-	pageS := c.QueryParam("page")
-	page, _ := strconv.Atoi(pageS)
+	var queryPageSize = c.QueryParam("page")
+	var page int
+	if queryPageSize == "" {
+		page = 1
+	} else {
+		page, _ = strconv.Atoi(queryPageSize)
+	}
 
-	doggos, err := h.doggoUseCase.GetDoggos(page, limit)
+	breedID := c.QueryParam("breed_id")
+
+	doggos, err := h.doggoUseCase.GetDoggos(page, limit, breedID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ResponseError{Message: err.Error()})
 	}
 
-	//c.Response().Header().Set(`X-Cursor`, nextCursor)
 	return c.JSON(http.StatusOK, doggos)
 }

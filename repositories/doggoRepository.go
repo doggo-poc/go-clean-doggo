@@ -7,8 +7,7 @@ import (
 )
 
 type DoggoRepository interface {
-	GetDoggosByBreedId(page int, limit int, breedID string) ([]DoggoDto, error)
-	GetDoggos(page int, limit int) ([]DoggoDto, error)
+	GetDoggos(page int, limit int, breedID string) ([]DoggoDto, error)
 }
 
 type doggoRepository struct {
@@ -18,11 +17,7 @@ func NewDoggoRepository() DoggoRepository {
 	return &doggoRepository{}
 }
 
-func (doggoRepository *doggoRepository) GetDoggos(page int, limit int) ([]DoggoDto, error) {
-	return fetchDoggos(page, limit, "")
-}
-
-func (doggoRepository *doggoRepository) GetDoggosByBreedId(page int, limit int, breedID string) ([]DoggoDto, error) {
+func (doggoRepository *doggoRepository) GetDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
 	return fetchDoggos(page, limit, breedID)
 }
 
@@ -39,8 +34,5 @@ func fetchDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
 	defer resp.Body.Close()
 	var data []DoggoDto
 	json.NewDecoder(resp.Body).Decode(&data)
-	for r := range data {
-		fmt.Printf("ID=%+v", r)
-	}
 	return data, nil
 }

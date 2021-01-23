@@ -1,17 +1,17 @@
 package repositories
 
 type BreedDto struct {
-	Id          string `json:"id" validate:"required"`
-	Name        string `json:"name" validate:"required"`
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
 	BreedGroup  string `json:"breed_group"`
-	LifeSpan    string `json:"life_span" validate:"required"`
+	LifeSpan    string `json:"life_span"`
 	Temperament string `json:"temperament"`
 }
 
 type DoggoDto struct {
-	Breeds []BreedDto
-	Height int    `json:"height" validate:"required"`
-	Id     string `json:"id" validate:"required"`
-	Url    string `json:"url" validate:"required"`
-	Width  string `json:"width" validate:"required"`
+	Breeds []BreedDto `json:"breeds"`
+	Height int        `json:"height"`
+	Id     string     `json:"id"`
+	Url    string     `json:"url"`
+	Width  string     `json:"width"`
 }

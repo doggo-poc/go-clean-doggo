@@ -1,9 +1,9 @@
 package model
 
 type Doggo struct {
-	Breeds []Breed
-	Height int
-	Id     string
-	Url    string
-	Width  string
+	Breeds []Breed `json:"breeds"`
+	Height int     `json:"height"`
+	Id     string  `json:"id"`
+	Url    string  `json:"url"`
+	Width  string  `json:"width"`
 }
