@@ -6,6 +6,11 @@ import (
 	"DoggosPkg/doggos/usecase"
 	"DoggosPkg/repositories"
 
+	breedsMapper "DoggosPkg/breeds/adapter"
+	breedsRouter "DoggosPkg/breeds/router"
+	breedsUseCase "DoggosPkg/breeds/usecase"
+	breedsRepository "DoggosPkg/repositories/breeds"
+
 	"github.com/labstack/echo"
 )
 
@@ -17,5 +22,8 @@ func main() {
 	e := echo.New()
 	router.NewDoggosHandler(e, usecase)
 
-	e.Logger.Fatal(e.Start(":9091"))
+	breedsUseCase := breedsUseCase.NewBreedsUseCase(breedsRepository.NewBreedsRepository(), breedsMapper.NewBreedsMapper())
+	breedsRouter.NewBreedsHandler(e, breedsUseCase)
+
+	e.Logger.Fatal(e.Start(":9090"))
 }
