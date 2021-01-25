@@ -12,18 +12,18 @@ type ResponseError struct {
 }
 
 type BreedsHandler struct {
-	breedsUseCase usecase.BreedsUseCase
+	BreedsUseCase usecase.BreedsUseCase
 }
 
 func NewBreedsHandler(e *echo.Echo, dR usecase.BreedsUseCase) {
 	handler := &BreedsHandler{
-		breedsUseCase: dR,
+		BreedsUseCase: dR,
 	}
 	e.GET("/breeds", handler.FetchBreeds)
 }
 
 func (h *BreedsHandler) FetchBreeds(c echo.Context) error {
-	breeds, err := h.breedsUseCase.GetBreeds()
+	breeds, err := h.BreedsUseCase.GetBreeds()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ResponseError{Message: err.Error()})
 	}
