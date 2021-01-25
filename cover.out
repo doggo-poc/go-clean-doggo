@@ -1,0 +1,9 @@
+mode: set
+DoggosPkg/breeds/router/breedsRouter.go:18.63,23.2 2 1
+DoggosPkg/breeds/router/breedsRouter.go:25.59,27.16 2 1
+DoggosPkg/breeds/router/breedsRouter.go:31.2,31.38 1 1
+DoggosPkg/breeds/router/breedsRouter.go:27.16,29.3 1 1
+DoggosPkg/breeds/adapter/breedsMapper.go:15.38,17.2 1 1
+DoggosPkg/breeds/adapter/breedsMapper.go:19.75,21.34 2 1
+DoggosPkg/breeds/adapter/breedsMapper.go:31.2,31.15 1 1
+DoggosPkg/breeds/adapter/breedsMapper.go:21.34,30.3 2 1
