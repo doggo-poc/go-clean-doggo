@@ -15,6 +15,9 @@ name: Build and Deploy to GKE
 on:
   release:
     types: [created]
+  push:
+    branches:
+      - fix/add-k8s-deployment-files #TODO: DELETEME
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
