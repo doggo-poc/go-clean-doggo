@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: doggo-deployment
+  name: doggo
 spec:
   replicas: 3
   selector:
@@ -13,18 +13,7 @@ spec:
         deployment: doggo
     spec:
       containers:
-        - name: the-container
+        - name: doggo-be
           image: golang:1.15.7-alpine3.13 # should be replaced by kustomize
           ports:
             - containerPort: 9090
-          env:
-            - name: ALT_GREETING
-              valueFrom:
-                configMapKeyRef:
-                  name: the-map
-                  key: altGreeting
-            - name: ENABLE_RISKY
-              valueFrom:
-                configMapKeyRef:
-                  name: the-map
-                  key: enableRisky
