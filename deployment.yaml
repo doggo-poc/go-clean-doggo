@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doggo-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      deployment: doggo
+  template:
+    metadata:
+      labels:
+        deployment: doggo
+    spec:
+      containers:
+        - name: the-container
+          #image
+          ports:
+            - containerPort: 9090
+          env:
+            - name: ALT_GREETING
+              valueFrom:
+                configMapKeyRef:
+                  name: the-map
+                  key: altGreeting
+            - name: ENABLE_RISKY
+              valueFrom:
+                configMapKeyRef:
+                  name: the-map
+                  key: enableRisky
