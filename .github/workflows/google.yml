@@ -23,7 +23,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: my-first-cluster-1
   GKE_ZONE: us-central1-c
-  DEPLOYMENT_NAME: doggo-project
+  DEPLOYMENT_NAME: doggo
   IMAGE: doggo-go-be-app
 
 jobs:
