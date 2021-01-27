@@ -4,6 +4,7 @@ import (
 	"DoggosPkg/doggos/adapters"
 	"DoggosPkg/doggos/router"
 	"DoggosPkg/doggos/usecase"
+	"DoggosPkg/middleware"
 	"DoggosPkg/repositories"
 
 	breedsMapper "DoggosPkg/breeds/adapter"
@@ -20,6 +21,8 @@ func main() {
 	usecase := usecase.NewDoggoUseCase(repositories.NewDoggoRepository(), mapper)
 
 	e := echo.New()
+	middL := middleware.InitMiddleware()
+	e.Use(middL.CORS)
 	router.NewDoggosHandler(e, usecase)
 
 	breedsUseCase := breedsUseCase.NewBreedsUseCase(breedsRepository.NewBreedsRepository(), breedsMapper.NewBreedsMapper())
