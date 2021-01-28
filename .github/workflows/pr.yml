@@ -20,8 +20,8 @@ jobs:
       - name: Build
         run: go build -v ./...
 
-      - name: Test
-        run: make ci-coverage
+      - name: Test and check coverage
+        run: $(echo "$(make ci-coverage | tail -n 1) > 90.0" | bc) -ge 0
 
       # Use Nancy for dependencies check: https://github.com/marketplace/actions/nancy-for-github-actions
       - name: WriteGoList
