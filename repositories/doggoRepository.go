@@ -22,7 +22,7 @@ func (doggoRepository *doggoRepository) GetDoggos(page int, limit int, breedID s
 }
 
 func fetchDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
-	var url string = fmt.Sprintf("https://api.thedogapi.com/v1/images/search?page=%d&limit=%d", page, limit)
+	var url string = fmt.Sprintf("https://api.thedogapi.com/v1/images/search?page=%d&limit=%d&mime_types=image/jpeg", page, limit)
 	if breedID != "" {
 		url += fmt.Sprintf("&breed_id=%s", breedID)
 	}
