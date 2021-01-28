@@ -12,6 +12,15 @@ import (
 	breedsUseCase "DoggosPkg/breeds/usecase"
 	breedsRepository "DoggosPkg/repositories/breeds"
 
+	catsMapper "DoggosPkg/cats/adapter"
+	catsRouter "DoggosPkg/cats/router"
+	catsUseCase "DoggosPkg/cats/usecase"
+	catsRepository "DoggosPkg/repositories/cats"
+
+	petsMapper "DoggosPkg/pets/adapter"
+	petsRouter "DoggosPkg/pets/router"
+	petsUseCase "DoggosPkg/pets/usecase"
+
 	"github.com/labstack/echo"
 )
 
@@ -28,5 +37,14 @@ func main() {
 	breedsUseCase := breedsUseCase.NewBreedsUseCase(breedsRepository.NewBreedsRepository(), breedsMapper.NewBreedsMapper())
 	breedsRouter.NewBreedsHandler(e, breedsUseCase)
 
+	catRepo := catsRepository.NewCatRepository()
+	catsUseCase := catsUseCase.NewCatUseCase(catRepo, catsMapper.NewCatMapper())
+	catsRouter.NewCatsHandler(e, catsUseCase)
+
+	pm := petsMapper.NewPetMapper(adapters.NewDoggoMapper(), catsMapper.NewCatMapper())
+	dr := repositories.NewDoggoRepository()
+	cr := catsRepository.NewCatRepository()
+	pr := petsUseCase.NewPetsUseCase(dr, cr, pm)
+	petsRouter.NewPetsHandler(e, pr)
 	e.Logger.Fatal(e.Start(":9090"))
 }

@@ -1,7 +1,7 @@
 package router
 
 import (
-	"DoggosPkg/doggos/usecase"
+	"DoggosPkg/cats/usecase"
 	"net/http"
 	"strconv"
 
@@ -12,19 +12,18 @@ type ResponseError struct {
 	Message string `json:"message"`
 }
 
-// DoggosHandler  represent the httphandler for Doggos
-type DoggosHandler struct {
-	doggoUseCase usecase.DoggoUseCase
+type CatsHandler struct {
+	catsUseCase usecase.CatUseCase
 }
 
-func NewDoggosHandler(e *echo.Echo, dR usecase.DoggoUseCase) {
-	handler := &DoggosHandler{
-		doggoUseCase: dR,
+func NewCatsHandler(e *echo.Echo, dR usecase.CatUseCase) {
+	handler := &CatsHandler{
+		catsUseCase: dR,
 	}
-	e.GET("/doggos", handler.FetchDoggos)
+	e.GET("/cats", handler.FetchCats)
 }
 
-func (h *DoggosHandler) FetchDoggos(c echo.Context) error {
+func (h *CatsHandler) FetchCats(c echo.Context) error {
 	queryLimit := c.QueryParam("limit")
 	var limit int
 	if queryLimit == "" {
@@ -43,7 +42,7 @@ func (h *DoggosHandler) FetchDoggos(c echo.Context) error {
 
 	breedID := c.QueryParam("breed_id")
 
-	doggos, err := h.doggoUseCase.GetDoggos(page, limit, breedID)
+	doggos, err := h.catsUseCase.GetCats(page, limit, breedID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ResponseError{Message: err.Error()})
 	}
