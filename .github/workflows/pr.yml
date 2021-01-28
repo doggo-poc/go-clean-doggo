@@ -20,14 +20,14 @@ jobs:
       - name: Build
         run: go build -v ./...
 
-      - name: Check for missing and unused dependencies
-        run: |
-          output=$(go mod tidy -v 2>&1)
+      # - name: Check for missing and unused dependencies
+      #   run: |
+      #     output=$(go mod tidy -v 2>&1)
 
-          if [ -n "${output}" ]; then
-              echo $output
-              exit 1
-          fi
+      #     if [ -n "${output}" ]; then
+      #         echo $output
+      #         exit 1
+      #     fi
       - name: Lint
         uses: golangci/golangci-lint-action@v2
         with:
