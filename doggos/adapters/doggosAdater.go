@@ -34,6 +34,7 @@ func mapBreedsDto(breedsDto []repositories.BreedDto) []model.Breed {
 func mapDoggoDto(doggoDto repositories.DoggoDto) model.Doggo {
 	return model.Doggo{
 		Height: doggoDto.Height,
+		Width:  doggoDto.Width,
 		Id:     doggoDto.Id,
 		Url:    doggoDto.Url,
 		Breeds: mapBreedsDto(doggoDto.Breeds),
