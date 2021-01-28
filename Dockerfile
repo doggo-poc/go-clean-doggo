@@ -12,9 +12,8 @@ RUN go get -d -v ./...
 # Install the package
 RUN go install -v ./...
 
-# This container exposes port 8080 to the outside world
+# This container exposes port 9090 to the outside world
 EXPOSE 9090
 
 # Run the executable
 CMD ["DoggosPkg"]
-

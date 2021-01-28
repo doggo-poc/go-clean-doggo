@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doggo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      deployment: doggo
+  template:
+    metadata:
+      labels:
+        deployment: doggo
+    spec:
+      containers:
+        - name: doggo
+          image: gcr.io/PROJECT_ID/IMAGE:TAG
+          ports:
+            - containerPort: 9090
