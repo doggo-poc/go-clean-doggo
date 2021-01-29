@@ -1,2 +1,7 @@
 DoggosPkg
+<<<<<<< HEAD
 *.out
+=======
+cover.out
+
+>>>>>>> 659215b (remove cover files)
