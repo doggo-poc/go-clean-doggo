@@ -14,12 +14,12 @@ type ResponseError struct {
 
 // DoggosHandler  represent the httphandler for Doggos
 type DoggosHandler struct {
-	doggoUseCase usecase.DoggoUseCase
+	DoggoUseCase usecase.DoggoUseCase
 }
 
 func NewDoggosHandler(e *echo.Echo, dR usecase.DoggoUseCase) {
 	handler := &DoggosHandler{
-		doggoUseCase: dR,
+		DoggoUseCase: dR,
 	}
 	e.GET("/doggos", handler.FetchDoggos)
 }
@@ -43,7 +43,7 @@ func (h *DoggosHandler) FetchDoggos(c echo.Context) error {
 
 	breedID := c.QueryParam("breed_id")
 
-	doggos, err := h.doggoUseCase.GetDoggos(page, limit, breedID)
+	doggos, err := h.DoggoUseCase.GetDoggos(page, limit, breedID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ResponseError{Message: err.Error()})
 	}

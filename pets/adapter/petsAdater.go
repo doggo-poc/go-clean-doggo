@@ -1,9 +1,6 @@
 package adapter
 
 import (
-	catsAdapter "DoggosPkg/cats/adapter"
-	catsModel "DoggosPkg/cats/usecase/model"
-	dogsAdapter "DoggosPkg/doggos/adapters"
 	"DoggosPkg/doggos/usecase/model"
 	petsModel "DoggosPkg/pets/usecase/model"
 	"DoggosPkg/repositories"
@@ -11,29 +8,14 @@ import (
 )
 
 type PetsMapper interface {
-	MapDoggos(doggos []repositories.DoggoDto) []model.Doggo
-	MapCats(cats []catsModelDto.CatDto) []catsModel.Cat
 	Map(d []repositories.DoggoDto, c []catsModelDto.CatDto) []petsModel.Pet
 }
 
 type petsMapper struct {
-	doggosMapper dogsAdapter.DoggosMapper
-	catsMapper   catsAdapter.CatsMapper
 }
 
-func NewPetMapper(dm dogsAdapter.DoggosMapper, cm catsAdapter.CatsMapper) *petsMapper {
-	return &petsMapper{
-		doggosMapper: dm,
-		catsMapper:   cm,
-	}
-}
-
-func (petsMapper *petsMapper) MapDoggos(doggos []repositories.DoggoDto) []model.Doggo {
-	return petsMapper.doggosMapper.Map(doggos)
-}
-
-func (petsMapper *petsMapper) MapCats(cats []catsModelDto.CatDto) []catsModel.Cat {
-	return petsMapper.catsMapper.Map(cats)
+func NewPetMapper() *petsMapper {
+	return &petsMapper{}
 }
 
 func mapBreedsDto(breedsDto []repositories.BreedDto) []model.Breed {

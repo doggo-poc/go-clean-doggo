@@ -41,7 +41,7 @@ func main() {
 	catsUseCase := catsUseCase.NewCatUseCase(catRepo, catsMapper.NewCatMapper())
 	catsRouter.NewCatsHandler(e, catsUseCase)
 
-	pm := petsMapper.NewPetMapper(adapters.NewDoggoMapper(), catsMapper.NewCatMapper())
+	pm := petsMapper.NewPetMapper()
 	dr := repositories.NewDoggoRepository()
 	cr := catsRepository.NewCatRepository()
 	pr := petsUseCase.NewPetsUseCase(dr, cr, pm)
