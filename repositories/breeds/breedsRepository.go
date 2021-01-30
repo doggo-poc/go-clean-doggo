@@ -1,6 +1,7 @@
 package breeds
 
 import (
+	"DoggosPkg/repositories"
 	"DoggosPkg/repositories/breeds/model"
 	"encoding/json"
 	"net/http"
@@ -11,14 +12,22 @@ type BreedsRepository interface {
 }
 
 type breedsRepository struct {
+	Client repositories.HttpClient
 }
 
-func NewBreedsRepository() BreedsRepository {
-	return &breedsRepository{}
+func NewBreedsRepository(client repositories.HttpClient) BreedsRepository {
+	return &breedsRepository{
+		Client: client,
+	}
 }
 
 func (breedsRepository *breedsRepository) GetBreeds() ([]model.BreedDto, error) {
-	resp, err := http.Get("https://api.thedogapi.com/v1/breeds")
+	r, error := http.NewRequest("GET", "https://api.thedogapi.com/v1/breeds", nil)
+	if error != nil {
+		print(error)
+		return nil, error
+	}
+	resp, err := breedsRepository.Client.Execute(r)
 	if err != nil {
 		print(err)
 		return nil, err
