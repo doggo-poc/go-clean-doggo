@@ -11,26 +11,37 @@ type DoggoRepository interface {
 }
 
 type doggoRepository struct {
+	Client HttpClient
 }
 
-func NewDoggoRepository() DoggoRepository {
-	return &doggoRepository{}
+func NewDoggoRepository(c HttpClient) DoggoRepository {
+	return &doggoRepository{
+		Client: c,
+	}
 }
 
-func (doggoRepository *doggoRepository) GetDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
-	return fetchDoggos(page, limit, breedID)
-}
-
-func fetchDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
+func NewUrl(page int, limit int, breedID string) string {
 	var url string = fmt.Sprintf("https://api.thedogapi.com/v1/images/search?page=%d&limit=%d&mime_types=image/jpeg", page, limit)
 	if breedID != "" {
 		url += fmt.Sprintf("&breed_id=%s", breedID)
 	}
-	resp, err := http.Get(url)
+	return url
+}
+
+func (doggoRepository *doggoRepository) GetDoggos(page int, limit int, breedID string) ([]DoggoDto, error) {
+	url := NewUrl(page, limit, breedID)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		print(err)
 		return nil, err
 	}
+
+	resp, err := doggoRepository.Client.Execute(req)
+	if err != nil {
+		print(err)
+		return nil, err
+	}
+
 	defer resp.Body.Close()
 	var data []DoggoDto
 	json.NewDecoder(resp.Body).Decode(&data)
