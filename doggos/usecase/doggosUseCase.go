@@ -23,9 +23,20 @@ func NewDoggoUseCase(doggoRepo repositories.DoggoRepository, doggosMapper adapte
 }
 
 func (d *doggoUseCase) GetDoggos(page int, limit int, breedID string) ([]model.Doggo, error) {
-	doggos, err := d.repository.GetDoggos(page, limit, breedID)
-	if err != nil {
-		return nil, err
+	type doggosOrError struct {
+		doggos []model.Doggo
+		err    error
 	}
-	return d.mapper.Map(doggos), nil
+	doggosChannel := make(chan doggosOrError, 1)
+	defer close(doggosChannel)
+	go func() {
+		r, e := d.repository.GetDoggos(page, limit, breedID)
+		if e != nil {
+			doggosChannel <- doggosOrError{doggos: nil, err: e}
+		} else {
+			doggosChannel <- doggosOrError{doggos: d.mapper.Map(r), err: nil}
+		}
+	}()
+	r := <-doggosChannel
+	return r.doggos, r.err
 }
